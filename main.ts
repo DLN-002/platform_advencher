@@ -4,7 +4,6 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
         jumping = true
         timer.after(500, function () {
             mySprite.setVelocity(0, 100)
-            jumping = false
         })
     }
 })
