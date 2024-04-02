@@ -10,10 +10,19 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 scene.onHitWall(SpriteKind.Player, function (sprite, location) {
     if (mySprite.isHittingTile(CollisionDirection.Bottom)) {
         jumping = false
+        mySprite.setVelocity(0, 100)
+    }
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, location) {
+    if (attack == true) {
+        music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
+        tiles.setTileAt(location, assets.tile`transparency16`)
+        info.changeScoreBy(1)
     }
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     if (left) {
+        attack = true
         animation.runImageAnimation(
         mySprite,
         [img`
@@ -114,8 +123,10 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
                 . . . . f f f f f f . . . . . . 
                 . . . . . . f f f . . . . . . . 
                 `)
+            attack = false
         })
     } else {
+        attack = true
         animation.runImageAnimation(
         mySprite,
         [img`
@@ -216,6 +227,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
                 . . . . . . f f f f f f . . . . 
                 . . . . . . . f f f . . . . . . 
                 `)
+            attack = false
         })
     }
 })
@@ -295,6 +307,11 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     false
     )
     left = true
+})
+statusbars.onZero(StatusBarKind.EnemyHealth, function (status) {
+    attack = false
+    tiles.setTileAt(mySprite2.tilemapLocation(), assets.tile`myTile`)
+    sprites.destroy(mySprite2)
 })
 statusbars.onZero(StatusBarKind.Health, function (status) {
     game.gameOver(false)
@@ -376,8 +393,27 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     )
     left = false
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile2`, function (sprite, location) {
+    if (attack == true) {
+        music.play(music.melodyPlayable(music.bigCrash), music.PlaybackMode.InBackground)
+        tiles.setTileAt(location, assets.tile`transparency16`)
+        tiles.setWallAt(location, false)
+    }
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    if (attack == false) {
+        statusbar.value += -0.5
+    }
+    if (attack == true) {
+        statusbar2.value += -2
+    }
+})
 let left = false
+let attack = false
 let jumping = false
+let statusbar2: StatusBarSprite = null
+let mySprite2: Sprite = null
+let statusbar: StatusBarSprite = null
 let mySprite: Sprite = null
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -524,8 +560,47 @@ tiles.setCurrentTilemap(tilemap`level2`)
 mySprite.setVelocity(0, 100)
 scene.cameraFollowSprite(mySprite)
 tiles.placeOnTile(mySprite, tiles.getTileLocation(1, 14))
-let statusbar = statusbars.create(20, 4, StatusBarKind.Health)
+statusbar = statusbars.create(20, 4, StatusBarKind.Health)
 statusbar.attachToSprite(mySprite)
 statusbar.setColor(2, 15)
 statusbar.max = 20
 statusbar.value = 20
+mySprite2 = sprites.create(img`
+    ........................
+    ........................
+    ........................
+    ........................
+    ..........ffff..........
+    ........ff1111ff........
+    .......fb111111bf.......
+    .......f1111111df.......
+    ......fd1111111ddf......
+    ......fd111111dddf......
+    ......fd111ddddddf......
+    ......fd1dfbddddbf......
+    ......fbddfcdbbbcf......
+    .......f11111bbcf.......
+    .......f1b1fffff........
+    .......fbfc111bf........
+    ........ff1b1bff........
+    .........fbfbfff.f......
+    ..........ffffffff......
+    ............fffff.......
+    ........................
+    ........................
+    ........................
+    ........................
+    `, SpriteKind.Enemy)
+mySprite2.setVelocity(0, 100)
+tiles.placeOnTile(mySprite2, tiles.getTileLocation(5, 14))
+statusbar2 = statusbars.create(20, 4, StatusBarKind.EnemyHealth)
+statusbar2.attachToSprite(mySprite2, -4, 0)
+statusbar2.setColor(2, 15)
+statusbar2.max = 5
+statusbar2.value = 5
+game.onUpdateInterval(2000, function () {
+    mySprite2.x += -32
+    timer.after(1000, function () {
+        mySprite2.x += 32
+    })
+})
