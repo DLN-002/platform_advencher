@@ -83,8 +83,8 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, lo
     }
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    attack = true
     if (player_direction == "D") {
-        attack = true
         animation.runImageAnimation(
         mySprite,
         [img`
@@ -197,7 +197,6 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         })
     }
     if (player_direction == "U") {
-        attack = true
         animation.runImageAnimation(
         mySprite,
         [img`
@@ -278,7 +277,6 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         })
     }
     if (player_direction == "L") {
-        attack = true
         animation.runImageAnimation(
         mySprite,
         [img`
@@ -366,7 +364,6 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         })
     }
     if (player_direction == "R") {
-        attack = true
         animation.runImageAnimation(
         mySprite,
         [img`
