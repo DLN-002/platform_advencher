@@ -1,5 +1,5 @@
 {
-    "name": "platform_Advencher",
+    "name": "Map_Advencher",
     "description": "",
     "dependencies": {
         "device": "*",
