@@ -80,7 +80,7 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, location) {
     if (attack == true) {
         music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
-        tiles.setTileAt(location, assets.tile`transparency16`)
+        tiles.setTileAt(location, assets.tile`myTile7`)
         info.changeScoreBy(1)
     }
 })
@@ -693,6 +693,15 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
         mySprite.setImage(down)
     })
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile10`, function (sprite, location) {
+    tiles.setTileAt(tiles.getTileLocation(0, 11), assets.tile`myTile`)
+    tiles.setTileAt(tiles.getTileLocation(0, 12), assets.tile`myTile7`)
+    tiles.setTileAt(tiles.getTileLocation(1, 13), assets.tile`myTile7`)
+    tiles.setTileAt(tiles.getTileLocation(1, 12), assets.tile`myTile7`)
+    tiles.setTileAt(tiles.getTileLocation(1, 11), assets.tile`myTile7`)
+    tiles.setTileAt(tiles.getTileLocation(2, 11), assets.tile`myTile7`)
+    tiles.setTileAt(tiles.getTileLocation(2, 12), assets.tile`myTile7`)
+})
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (attack == false) {
     	
@@ -707,6 +716,7 @@ let left: Image = null
 let up: Image = null
 let down: Image = null
 let right: Image = null
+info.setLife(3)
 right = img`
     . . . . . . f f f f f f . . . . 
     . . . . f f e e e e f 2 f . . . 
