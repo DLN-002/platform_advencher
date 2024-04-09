@@ -73,9 +73,7 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     100,
     false
     )
-    timer.after(100, function () {
-        mySprite.setImage(up)
-    })
+    player_direction = "U"
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, location) {
     if (attack == true) {
@@ -85,7 +83,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, lo
     }
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (mySprite.image == down) {
+    if (player_direction == "D") {
         attack = true
         animation.runImageAnimation(
         mySprite,
@@ -198,7 +196,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             attack = false
         })
     }
-    if (mySprite.image == up) {
+    if (player_direction == "U") {
         attack = true
         animation.runImageAnimation(
         mySprite,
@@ -279,7 +277,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             attack = false
         })
     }
-    if (mySprite.image == left) {
+    if (player_direction == "L") {
         attack = true
         animation.runImageAnimation(
         mySprite,
@@ -367,7 +365,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
             attack = false
         })
     }
-    if (mySprite.image == right) {
+    if (player_direction == "R") {
         attack = true
         animation.runImageAnimation(
         mySprite,
@@ -531,9 +529,7 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     100,
     false
     )
-    timer.after(100, function () {
-        mySprite.setImage(left)
-    })
+    player_direction = "L"
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
@@ -610,9 +606,7 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     100,
     false
     )
-    timer.after(100, function () {
-        mySprite.setImage(right)
-    })
+    player_direction = "R"
 })
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
@@ -689,9 +683,7 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     100,
     false
     )
-    timer.after(100, function () {
-        mySprite.setImage(down)
-    })
+    player_direction = "D"
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile10`, function (sprite, location) {
     tiles.setTileAt(tiles.getTileLocation(0, 11), assets.tile`myTile`)
@@ -711,6 +703,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
     }
 })
 let attack = false
+let player_direction = ""
 let mySprite: Sprite = null
 let left: Image = null
 let up: Image = null
@@ -807,6 +800,7 @@ mySprite = sprites.create(img`
     . . . . . . f f f f f f . . . . 
     . . . . . . . f f f . . . . . . 
     `, SpriteKind.Player)
+player_direction = "R"
 controller.moveSprite(mySprite)
 tiles.setCurrentTilemap(tilemap`level2`)
 scene.cameraFollowSprite(mySprite)
