@@ -78,8 +78,8 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, location) {
     if (attack == true) {
         music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
+        coins += 1
         tiles.setTileAt(location, assets.tile`myTile7`)
-        info.changeScoreBy(1)
     }
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -191,9 +191,11 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         100,
         false
         )
+        mySprite.y += 5
         timer.after(500, function () {
             mySprite.setImage(down)
             attack = false
+            mySprite.y += -5
         })
     }
     if (player_direction == "U") {
@@ -271,9 +273,11 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         100,
         false
         )
+        mySprite.y += -5
         timer.after(500, function () {
             mySprite.setImage(up)
             attack = false
+            mySprite.y += 5
         })
     }
     if (player_direction == "L") {
@@ -358,9 +362,11 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         100,
         false
         )
+        mySprite.x += -5
         timer.after(500, function () {
             mySprite.setImage(left)
             attack = false
+            mySprite.x += 5
         })
     }
     if (player_direction == "R") {
@@ -445,9 +451,11 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         100,
         false
         )
+        mySprite.x += 5
         timer.after(500, function () {
             mySprite.setImage(right)
             attack = false
+            mySprite.x += -5
         })
     }
 })
@@ -527,6 +535,11 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     false
     )
     player_direction = "L"
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile18`, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`myTile1`)
+    info.changeScoreBy(1)
+    game.showLongText("You Got A Bomb!", DialogLayout.Top)
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
@@ -682,6 +695,11 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     )
     player_direction = "D"
 })
+controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
+    game.showLongText("Life- " + info.life(), DialogLayout.Top)
+    game.showLongText("Coins- " + coins, DialogLayout.Top)
+    game.showLongText("A- Sword Attack         B- Throw Bomb", DialogLayout.Top)
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile10`, function (sprite, location) {
     tiles.setTileAt(tiles.getTileLocation(0, 11), assets.tile`myTile`)
     tiles.setTileAt(tiles.getTileLocation(0, 12), assets.tile`myTile7`)
@@ -693,10 +711,12 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile10`, function (sprite, 
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (attack == false) {
-    	
+        timer.throttle("action", 1000, function () {
+            info.changeLifeBy(-1)
+        })
     }
     if (attack == true) {
-    	
+        sprites.destroy(otherSprite)
     }
 })
 let attack = false
@@ -706,7 +726,10 @@ let left: Image = null
 let up: Image = null
 let down: Image = null
 let right: Image = null
+let coins = 0
 info.setLife(3)
+info.setScore(0)
+coins = 0
 right = img`
     . . . . . . f f f f f f . . . . 
     . . . . f f e e e e f 2 f . . . 
@@ -810,22 +833,22 @@ let mySprite2 = sprites.create(img`
     ..........ffff..........
     ........ff1111ff........
     .......fb111111bf.......
-    .......f1111111df.......
-    ......fd1111111ddf......
-    ......fd111111dddf......
-    ......fd111ddddddf......
-    ......fd1dfbddddbf......
-    ......fbddfcdbbbcf......
-    .......f11111bbcf.......
-    .......f1b1fffff........
-    .......fbfc111bf........
-    ........ff1b1bff........
-    .........fbfbfff.f......
-    ..........ffffffff......
-    ............fffff.......
+    .......fd1111111f.......
+    ......fdd1111111df......
+    ......fddd111111df......
+    ......fdddddd111df......
+    ......fbddddbfd1df......
+    ......fcbbbdcfddbf......
+    .......fcbb11111f.......
+    ........fffff1b1f.......
+    ........fb111cfbf.......
+    ........ffb1b1ff........
+    ......f.fffbfbf.........
+    ......ffffffff..........
+    .......fffff............
     ........................
     ........................
     ........................
     ........................
     `, SpriteKind.Enemy)
-tiles.placeOnTile(mySprite2, tiles.getTileLocation(0, 0))
+tiles.placeOnTile(mySprite2, tiles.getTileLocation(3, 5))
