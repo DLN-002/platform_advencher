@@ -830,6 +830,22 @@ controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
     game.showLongText("Bombs- " + info.score(), DialogLayout.Top)
     game.showLongText("A- Sword Attack         B- Throw Bomb", DialogLayout.Top)
 })
+function open_gate () {
+    tiles.setTileAt(tiles.getTileLocation(21, 30), assets.tile`myTile28`)
+    timer.after(500, function () {
+        tiles.setTileAt(tiles.getTileLocation(20, 30), assets.tile`myTile28`)
+        tiles.setTileAt(tiles.getTileLocation(22, 30), assets.tile`myTile28`)
+        timer.after(500, function () {
+            tiles.setTileAt(tiles.getTileLocation(19, 30), assets.tile`myTile28`)
+            tiles.setTileAt(tiles.getTileLocation(23, 30), assets.tile`myTile28`)
+        })
+    })
+    tiles.setWallAt(tiles.getTileLocation(19, 30), false)
+    tiles.setWallAt(tiles.getTileLocation(20, 30), false)
+    tiles.setWallAt(tiles.getTileLocation(21, 30), false)
+    tiles.setWallAt(tiles.getTileLocation(22, 30), false)
+    tiles.setWallAt(tiles.getTileLocation(23, 30), false)
+}
 function throw_bomb (x: number, y: number) {
     projectile = sprites.createProjectileFromSprite(img`
         . . . . . . . . . . . . . . . . 
@@ -886,6 +902,9 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile23`, function (sprite, 
         game.showLongText("no life to refill.", DialogLayout.Top)
     }
     tiles.setTileAt(location, assets.tile`myTile1`)
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile28`, function (sprite, location) {
+    open_gate()
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (attack == false) {
