@@ -1,3 +1,13 @@
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile19`, function (sprite, location) {
+    if (attack == true) {
+        music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
+        coins += 1
+        tiles.setTileAt(location, assets.tile`myTile1`)
+        timer.after(500, function () {
+            game.showLongText("you got a coin!", DialogLayout.Top)
+        })
+    }
+})
 controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
     mySprite,
@@ -75,11 +85,36 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
     )
     player_direction = "U"
 })
+scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile3`, function (sprite, location) {
+    sprites.destroy(projectile)
+})
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    if (0 < info.score()) {
+        info.changeScoreBy(-1)
+        if (player_direction == "R") {
+            throw_bomb(150, 0)
+        }
+        if (player_direction == "L") {
+            throw_bomb(-150, 0)
+        }
+        if (player_direction == "U") {
+            throw_bomb(0, -150)
+        }
+        if (player_direction == "D") {
+            throw_bomb(0, 150)
+        }
+    } else {
+        game.showLongText("you don't have any Bombs!", DialogLayout.Top)
+    }
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, location) {
     if (attack == true) {
         music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
         coins += 1
         tiles.setTileAt(location, assets.tile`myTile7`)
+        timer.after(500, function () {
+            game.showLongText("you got a coin!", DialogLayout.Top)
+        })
     }
 })
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -459,6 +494,74 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         })
     }
 })
+scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile4`, function (sprite, location) {
+    sprites.destroy(projectile)
+})
+scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile24`, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`myTile1`)
+    tiles.setWallAt(location, false)
+    projectile.setVelocity(0, 0)
+    animation.runImageAnimation(
+    projectile,
+    [img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . 4 . . . . . 
+        . . . . 2 . . . . 4 4 . . . . . 
+        . . . . 2 4 . . 4 5 4 . . . . . 
+        . . . . . 2 4 d 5 5 4 . . . . . 
+        . . . . . 2 5 5 5 5 4 . . . . . 
+        . . . . . . 2 5 5 5 5 4 . . . . 
+        . . . . . . 2 5 4 2 4 4 . . . . 
+        . . . . . . 4 4 . . 2 4 4 . . . 
+        . . . . . 4 4 . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `,img`
+        . 3 . . . . . . . . . . . 4 . . 
+        . 3 3 . . . . . . . . . 4 4 . . 
+        . 3 d 3 . . 4 4 . . 4 4 d 4 . . 
+        . . 3 5 3 4 5 5 4 4 d d 4 4 . . 
+        . . 3 d 5 d 1 1 d 5 5 d 4 4 . . 
+        . . 4 5 5 1 1 1 1 5 1 1 5 4 . . 
+        . 4 5 5 5 5 1 1 5 1 1 1 d 4 4 . 
+        . 4 d 5 1 1 5 5 5 1 1 1 5 5 4 . 
+        . 4 4 5 1 1 5 5 5 5 5 d 5 5 4 . 
+        . . 4 3 d 5 5 5 d 5 5 d d d 4 . 
+        . 4 5 5 d 5 5 5 d d d 5 5 4 . . 
+        . 4 5 5 d 3 5 d d 3 d 5 5 4 . . 
+        . 4 4 d d 4 d d d 4 3 d d 4 . . 
+        . . 4 5 4 4 4 4 4 4 4 4 4 . . . 
+        . 4 5 4 . . 4 4 4 . . . 4 4 . . 
+        . 4 4 . . . . . . . . . . 4 4 . 
+        `,img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . b b . b b b . . . . . 
+        . . . . b 1 1 b 1 1 1 b . . . . 
+        . . b b 3 1 1 d d 1 d d b b . . 
+        . b 1 1 d d b b b b b 1 1 b . . 
+        . b 1 1 1 b . . . . . b d d b . 
+        . . 3 d d b . . . . . b d 1 1 b 
+        . b 1 d 3 . . . . . . . b 1 1 b 
+        . b 1 1 b . . . . . . b b 1 d b 
+        . b 1 d b . . . . . . b d 3 d b 
+        . b b d d b . . . . b d d d b . 
+        . b d d d d b . b b 3 d d 3 b . 
+        . . b d d 3 3 b d 3 3 b b b . . 
+        . . . b b b d d d d d b . . . . 
+        . . . . . . b b b b b . . . . . 
+        `],
+    200,
+    false
+    )
+    timer.after(200, function () {
+        sprites.destroy(projectile)
+    })
+})
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
     mySprite,
@@ -538,8 +641,8 @@ controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile18`, function (sprite, location) {
     tiles.setTileAt(location, assets.tile`myTile1`)
-    info.changeScoreBy(1)
-    game.showLongText("You Got A Bomb!", DialogLayout.Top)
+    info.changeScoreBy(3)
+    game.showLongText("You Got 3 Bombs!", DialogLayout.Top)
 })
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
@@ -617,6 +720,9 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     false
     )
     player_direction = "R"
+})
+scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile0`, function (sprite, location) {
+    sprites.destroy(projectile)
 })
 controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
@@ -696,10 +802,32 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     player_direction = "D"
 })
 controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
-    game.showLongText("Life- " + info.life(), DialogLayout.Top)
+    game.showLongText("Max Life- " + max_life, DialogLayout.Top)
     game.showLongText("Coins- " + coins, DialogLayout.Top)
+    game.showLongText("Bombs- " + info.score(), DialogLayout.Top)
     game.showLongText("A- Sword Attack         B- Throw Bomb", DialogLayout.Top)
 })
+function throw_bomb (x: number, y: number) {
+    projectile = sprites.createProjectileFromSprite(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . 2 . 
+        . . . . . . . . . . . . . d 2 2 
+        . . . . . . . . . . . d d . . . 
+        . . f f f f f f f d d . . . . . 
+        . f f f f f f f f f . . . . . . 
+        f f f f f f f f f f f . . . . . 
+        f f f f f f f f f f f . . . . . 
+        f f f f f f f f f f f . . . . . 
+        f f f f f f f f f f f . . . . . 
+        f f f f f f f f f f f . . . . . 
+        f f f f f f f f f f f . . . . . 
+        f f f f f f f f f f f . . . . . 
+        . f f f f f f f f f . . . . . . 
+        . . f f f f f f f . . . . . . . 
+        `, mySprite, x, y)
+    projectile.setFlag(SpriteFlag.GhostThroughWalls, true)
+}
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile10`, function (sprite, location) {
     tiles.setTileAt(tiles.getTileLocation(0, 11), assets.tile`myTile`)
     tiles.setTileAt(tiles.getTileLocation(0, 12), assets.tile`myTile7`)
@@ -708,6 +836,20 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile10`, function (sprite, 
     tiles.setTileAt(tiles.getTileLocation(1, 11), assets.tile`myTile7`)
     tiles.setTileAt(tiles.getTileLocation(2, 11), assets.tile`myTile7`)
     tiles.setTileAt(tiles.getTileLocation(2, 12), assets.tile`myTile7`)
+})
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
+    sprites.destroy(sprite)
+    sprites.destroy(otherSprite)
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile23`, function (sprite, location) {
+    if (info.life() < max_life) {
+        music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
+        info.changeLifeBy(1)
+        game.showLongText("you got one heart refilled!", DialogLayout.Top)
+    } else {
+        game.showLongText("no life to refill.", DialogLayout.Top)
+    }
+    tiles.setTileAt(location, assets.tile`myTile1`)
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (attack == false) {
@@ -719,7 +861,9 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
         sprites.destroy(otherSprite)
     }
 })
+let projectile: Sprite = null
 let attack = false
+let max_life = 0
 let player_direction = ""
 let mySprite: Sprite = null
 let left: Image = null
@@ -821,6 +965,7 @@ mySprite = sprites.create(img`
     . . . . . . . f f f . . . . . . 
     `, SpriteKind.Player)
 player_direction = "R"
+max_life = 3
 controller.moveSprite(mySprite)
 tiles.setCurrentTilemap(tilemap`level2`)
 scene.cameraFollowSprite(mySprite)
