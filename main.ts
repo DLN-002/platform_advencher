@@ -117,6 +117,19 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, lo
         })
     }
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile32`, function (sprite, location) {
+    if (attack == true) {
+        music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
+        coins += 1
+        tiles.setTileAt(location, assets.tile`myTile1`)
+        timer.after(500, function () {
+            game.showLongText("you got a coin!", DialogLayout.Top)
+        })
+        timer.after(60000, function () {
+            tiles.setTileAt(location, assets.tile`myTile32`)
+        })
+    }
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     attack = true
     if (player_direction == "D") {
@@ -562,6 +575,16 @@ scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile24`, function (spri
         sprites.destroy(projectile)
     })
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile33`, function (sprite, location) {
+    if (attack == true) {
+        music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
+        coins += 1
+        tiles.setTileAt(location, assets.tile`myTile28`)
+        timer.after(500, function () {
+            game.showLongText("you got a coin!", DialogLayout.Top)
+        })
+    }
+})
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
     mySprite,
@@ -836,6 +859,19 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile10`, function (sprite, 
     tiles.setTileAt(tiles.getTileLocation(1, 11), assets.tile`myTile7`)
     tiles.setTileAt(tiles.getTileLocation(2, 11), assets.tile`myTile7`)
     tiles.setTileAt(tiles.getTileLocation(2, 12), assets.tile`myTile7`)
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile31`, function (sprite, location) {
+    if (attack == true) {
+        music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
+        coins += 1
+        tiles.setTileAt(location, assets.tile`myTile30`)
+        timer.after(500, function () {
+            game.showLongText("you got a coin!", DialogLayout.Top)
+        })
+        timer.after(60000, function () {
+            tiles.setTileAt(location, assets.tile`myTile31`)
+        })
+    }
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroy(sprite)
