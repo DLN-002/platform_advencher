@@ -1,3 +1,6 @@
+namespace SpriteKind {
+    export const Animal = SpriteKind.create()
+}
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile19`, function (sprite, location) {
     if (attack == true) {
         music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
@@ -744,6 +747,21 @@ controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     )
     player_direction = "R"
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile36`, function (sprite, location) {
+    music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
+    coins += 1
+    tiles.setTileAt(location, assets.tile`myTile37`)
+    game.showLongText("you got a coin!", DialogLayout.Top)
+})
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile44`, function (sprite, location) {
+    if (attack == true) {
+        music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
+        tiles.setTileAt(location, assets.tile`myTile1`)
+        timer.after(60000, function () {
+            tiles.setTileAt(location, assets.tile`myTile44`)
+        })
+    }
+})
 scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile0`, function (sprite, location) {
     sprites.destroy(projectile)
 })
@@ -1052,3 +1070,22 @@ let mySprite2 = sprites.create(img`
     ........................
     `, SpriteKind.Enemy)
 tiles.placeOnTile(mySprite2, tiles.getTileLocation(3, 5))
+let projectile2 = sprites.createProjectileFromSprite(img`
+    . . . . f f f f f . . . . . . . 
+    . . . f e e e e e f . . . . . . 
+    . . f d d d d e e e f . . . . . 
+    . c d f d d f d e e f f . . . . 
+    . c d f d d f d e e d d f . . . 
+    c d e e d d d d e e b d c . . . 
+    c d d d d c d d e e b d c . f f 
+    c c c c c d d d e e f c . f e f 
+    . f d d d d d e e f f . . f e f 
+    . . f f f f f e e e e f . f e f 
+    . . . . f e e e e e e e f f e f 
+    . . . f e f f e f e e e e f f . 
+    . . . f e f f e f e e e e f . . 
+    . . . f d b f d b f f e f . . . 
+    . . . f d d c d d b b d f . . . 
+    . . . . f f f f f f f f f . . . 
+    `, mySprite, 0, 0)
+tiles.placeOnTile(projectile2, tiles.getTileLocation(53, 19))
