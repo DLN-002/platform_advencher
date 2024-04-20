@@ -93,8 +93,8 @@ scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile3`, function (sprit
 })
 controller.combos.attachCombo("UUUDLLLRDURLLRUD", function () {
     music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
-    max_life = 20
-    info.setLife(20)
+    max_life += 20
+    info.changeLifeBy(20)
 })
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (0 < info.score()) {
@@ -127,7 +127,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, lo
 })
 controller.combos.attachCombo("UUDLLRUDRL", function () {
     music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
-    info.setScore(50)
+    info.changeScoreBy(50)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile32`, function (sprite, location) {
     if (attack == true) {
