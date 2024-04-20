@@ -91,6 +91,11 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile3`, function (sprite, location) {
     sprites.destroy(projectile)
 })
+controller.combos.attachCombo("UUUDLLLRDURLLRUD", function () {
+    music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
+    max_life = 20
+    info.setLife(20)
+})
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (0 < info.score()) {
         info.changeScoreBy(-1)
@@ -119,6 +124,10 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, lo
             game.showLongText("you got a coin!", DialogLayout.Top)
         })
     }
+})
+controller.combos.attachCombo("UUDLLRUDRL", function () {
+    music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
+    info.setScore(50)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile32`, function (sprite, location) {
     if (attack == true) {
