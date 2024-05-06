@@ -519,6 +519,154 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         })
     }
 })
+function start_game () {
+    scene.setBackgroundColor(15)
+    info.setLife(3)
+    info.setScore(0)
+    coins = 0
+    right = img`
+        . . . . . . f f f f f f . . . . 
+        . . . . f f e e e e f 2 f . . . 
+        . . . f f e e e e f 2 2 2 f . . 
+        . . . f e e e f f e e e e f . . 
+        . . . f f f f e e 2 2 2 2 e f . 
+        . . . f e 2 2 2 f f f f e 2 f . 
+        . . f f f f f f f e e e f f f . 
+        . . f f e 4 4 e b f 4 4 e e f . 
+        . . f e e 4 d 4 1 f d d e f . . 
+        . . . f e e e 4 d d d d f . . . 
+        . . . . f f e e 4 4 4 e f . . . 
+        . . . . . 4 d d e 2 2 2 f . . . 
+        . . . . . e d d e 2 2 2 f . . . 
+        . . . . . f e e f 4 5 5 f . . . 
+        . . . . . . f f f f f f . . . . 
+        . . . . . . . f f f . . . . . . 
+        `
+    down = img`
+        . . . . . . f f f f . . . . . . 
+        . . . . f f f 2 2 f f f . . . . 
+        . . . f f f 2 2 2 2 f f f . . . 
+        . . f f f e e e e e e f f f . . 
+        . . f f e 2 2 2 2 2 2 e e f . . 
+        . . f e 2 f f f f f f 2 e f . . 
+        . . f f f f e e e e f f f f . . 
+        . f f e f b f 4 4 f b f e f f . 
+        . f e e 4 1 f d d f 1 4 e e f . 
+        . . f e e d d d d d d e e f . . 
+        . . . f e e 4 4 4 4 e e f . . . 
+        . . e 4 f 2 2 2 2 2 2 f 4 e . . 
+        . . 4 d f 2 2 2 2 2 2 f d 4 . . 
+        . . 4 4 f 4 4 5 5 4 4 f 4 4 . . 
+        . . . . . f f f f f f . . . . . 
+        . . . . . f f . . f f . . . . . 
+        `
+    up = img`
+        . . . . . . f f f f . . . . . . 
+        . . . . f f e e e e f f . . . . 
+        . . . f e e e f f e e e f . . . 
+        . . f f f f f 2 2 f f f f f . . 
+        . . f f e 2 e 2 2 e 2 e f f . . 
+        . . f e 2 f 2 f f 2 f 2 e f . . 
+        . . f f f 2 2 e e 2 2 f f f . . 
+        . f f e f 2 f e e f 2 f e f f . 
+        . f e e f f e e e e f e e e f . 
+        . . f e e e e e e e e e e f . . 
+        . . . f e e e e e e e e f . . . 
+        . . e 4 f f f f f f f f 4 e . . 
+        . . 4 d f 2 2 2 2 2 2 f d 4 . . 
+        . . 4 4 f 4 4 4 4 4 4 f 4 4 . . 
+        . . . . . f f f f f f . . . . . 
+        . . . . . f f . . f f . . . . . 
+        `
+    left = img`
+        . . . . f f f f f f . . . . . . 
+        . . . f 2 f e e e e f f . . . . 
+        . . f 2 2 2 f e e e e f f . . . 
+        . . f e e e e f f e e e f . . . 
+        . f e 2 2 2 2 e e f f f f . . . 
+        . f 2 e f f f f 2 2 2 e f . . . 
+        . f f f e e e f f f f f f f . . 
+        . f e e 4 4 f b e 4 4 e f f . . 
+        . . f e d d f 1 4 d 4 e e f . . 
+        . . . f d d d d 4 e e e f . . . 
+        . . . f e 4 4 4 e e f f . . . . 
+        . . . f 2 2 2 e d d 4 . . . . . 
+        . . . f 2 2 2 e d d e . . . . . 
+        . . . f 5 5 4 f e e f . . . . . 
+        . . . . f f f f f f . . . . . . 
+        . . . . . . f f f . . . . . . . 
+        `
+    mySprite = sprites.create(img`
+        . . . . . . f f f f f f . . . . 
+        . . . . f f e e e e f 2 f . . . 
+        . . . f f e e e e f 2 2 2 f . . 
+        . . . f e e e f f e e e e f . . 
+        . . . f f f f e e 2 2 2 2 e f . 
+        . . . f e 2 2 2 f f f f e 2 f . 
+        . . f f f f f f f e e e f f f . 
+        . . f f e 4 4 e b f 4 4 e e f . 
+        . . f e e 4 d 4 1 f d d e f . . 
+        . . . f e e e 4 d d d d f . . . 
+        . . . . f f e e 4 4 4 e f . . . 
+        . . . . . 4 d d e 2 2 2 f . . . 
+        . . . . . e d d e 2 2 2 f . . . 
+        . . . . . f e e f 4 5 5 f . . . 
+        . . . . . . f f f f f f . . . . 
+        . . . . . . . f f f . . . . . . 
+        `, SpriteKind.Player)
+    player_direction = "R"
+    max_life = 3
+    controller.moveSprite(mySprite)
+    tiles.setCurrentTilemap(tilemap`level2`)
+    scene.cameraFollowSprite(mySprite)
+    tiles.placeOnTile(mySprite, tiles.getTileLocation(1, 14))
+    mySprite2 = sprites.create(img`
+        ........................
+        ........................
+        ........................
+        ........................
+        ..........ffff..........
+        ........ff1111ff........
+        .......fb111111bf.......
+        .......fd1111111f.......
+        ......fdd1111111df......
+        ......fddd111111df......
+        ......fdddddd111df......
+        ......fbddddbfd1df......
+        ......fcbbbdcfddbf......
+        .......fcbb11111f.......
+        ........fffff1b1f.......
+        ........fb111cfbf.......
+        ........ffb1b1ff........
+        ......f.fffbfbf.........
+        ......ffffffff..........
+        .......fffff............
+        ........................
+        ........................
+        ........................
+        ........................
+        `, SpriteKind.Enemy)
+    tiles.placeOnTile(mySprite2, tiles.getTileLocation(3, 5))
+    mySprite2 = sprites.create(img`
+        . . . . f f f f f . . . . . . . 
+        . . . f e e e e e f . . . . . . 
+        . . f d d d d e e e f . . . . . 
+        . c d f d d f d e e f f . . . . 
+        . c d f d d f d e e d d f . . . 
+        c d e e d d d d e e b d c . . . 
+        c d d d d c d d e e b d c . . . 
+        c c c c c d d e e e f c . . . . 
+        . f d d d d e e e f f . . . . . 
+        . . f f f f f e e e e f . . . . 
+        . . . . f f e e e e e e f . f f 
+        . . . f e e f e e f e e f . e f 
+        . . f e e f e e f e e e f . e f 
+        . f b d f d b f b b f e f f e f 
+        . f d d f d d f d d b e f f f f 
+        . . f f f f f f f f f f f f f . 
+        `, SpriteKind.Animal)
+    tiles.placeOnTile(mySprite2, tiles.getTileLocation(53, 19))
+}
 scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile4`, function (sprite, location) {
     sprites.destroy(projectile)
 })
@@ -857,6 +1005,9 @@ controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
     game.showLongText("Bombs- " + info.score(), DialogLayout.Top)
     game.showLongText("A- Sword Attack         B- Throw Bomb", DialogLayout.Top)
 })
+info.onLifeZero(function () {
+    color.FadeToBlack.startScreenEffect(500)
+})
 function open_gate () {
     tiles.setTileAt(tiles.getTileLocation(21, 30), assets.tile`myTile28`)
     timer.after(500, function () {
@@ -943,161 +1094,18 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
         sprites.destroy(otherSprite)
     }
 })
-let projectile: Sprite = null
-let attack = false
-let max_life = 0
-let player_direction = ""
-let mySprite: Sprite = null
+let mySprite2: Sprite = null
+let right: Image = null
 let left: Image = null
 let up: Image = null
 let down: Image = null
-let right: Image = null
+let max_life = 0
+let projectile: Sprite = null
+let player_direction = ""
+let mySprite: Sprite = null
 let coins = 0
-info.setLife(3)
-info.setScore(0)
-coins = 0
-right = img`
-    . . . . . . f f f f f f . . . . 
-    . . . . f f e e e e f 2 f . . . 
-    . . . f f e e e e f 2 2 2 f . . 
-    . . . f e e e f f e e e e f . . 
-    . . . f f f f e e 2 2 2 2 e f . 
-    . . . f e 2 2 2 f f f f e 2 f . 
-    . . f f f f f f f e e e f f f . 
-    . . f f e 4 4 e b f 4 4 e e f . 
-    . . f e e 4 d 4 1 f d d e f . . 
-    . . . f e e e 4 d d d d f . . . 
-    . . . . f f e e 4 4 4 e f . . . 
-    . . . . . 4 d d e 2 2 2 f . . . 
-    . . . . . e d d e 2 2 2 f . . . 
-    . . . . . f e e f 4 5 5 f . . . 
-    . . . . . . f f f f f f . . . . 
-    . . . . . . . f f f . . . . . . 
-    `
-down = img`
-    . . . . . . f f f f . . . . . . 
-    . . . . f f f 2 2 f f f . . . . 
-    . . . f f f 2 2 2 2 f f f . . . 
-    . . f f f e e e e e e f f f . . 
-    . . f f e 2 2 2 2 2 2 e e f . . 
-    . . f e 2 f f f f f f 2 e f . . 
-    . . f f f f e e e e f f f f . . 
-    . f f e f b f 4 4 f b f e f f . 
-    . f e e 4 1 f d d f 1 4 e e f . 
-    . . f e e d d d d d d e e f . . 
-    . . . f e e 4 4 4 4 e e f . . . 
-    . . e 4 f 2 2 2 2 2 2 f 4 e . . 
-    . . 4 d f 2 2 2 2 2 2 f d 4 . . 
-    . . 4 4 f 4 4 5 5 4 4 f 4 4 . . 
-    . . . . . f f f f f f . . . . . 
-    . . . . . f f . . f f . . . . . 
-    `
-up = img`
-    . . . . . . f f f f . . . . . . 
-    . . . . f f e e e e f f . . . . 
-    . . . f e e e f f e e e f . . . 
-    . . f f f f f 2 2 f f f f f . . 
-    . . f f e 2 e 2 2 e 2 e f f . . 
-    . . f e 2 f 2 f f 2 f 2 e f . . 
-    . . f f f 2 2 e e 2 2 f f f . . 
-    . f f e f 2 f e e f 2 f e f f . 
-    . f e e f f e e e e f e e e f . 
-    . . f e e e e e e e e e e f . . 
-    . . . f e e e e e e e e f . . . 
-    . . e 4 f f f f f f f f 4 e . . 
-    . . 4 d f 2 2 2 2 2 2 f d 4 . . 
-    . . 4 4 f 4 4 4 4 4 4 f 4 4 . . 
-    . . . . . f f f f f f . . . . . 
-    . . . . . f f . . f f . . . . . 
-    `
-left = img`
-    . . . . f f f f f f . . . . . . 
-    . . . f 2 f e e e e f f . . . . 
-    . . f 2 2 2 f e e e e f f . . . 
-    . . f e e e e f f e e e f . . . 
-    . f e 2 2 2 2 e e f f f f . . . 
-    . f 2 e f f f f 2 2 2 e f . . . 
-    . f f f e e e f f f f f f f . . 
-    . f e e 4 4 f b e 4 4 e f f . . 
-    . . f e d d f 1 4 d 4 e e f . . 
-    . . . f d d d d 4 e e e f . . . 
-    . . . f e 4 4 4 e e f f . . . . 
-    . . . f 2 2 2 e d d 4 . . . . . 
-    . . . f 2 2 2 e d d e . . . . . 
-    . . . f 5 5 4 f e e f . . . . . 
-    . . . . f f f f f f . . . . . . 
-    . . . . . . f f f . . . . . . . 
-    `
-mySprite = sprites.create(img`
-    . . . . . . f f f f f f . . . . 
-    . . . . f f e e e e f 2 f . . . 
-    . . . f f e e e e f 2 2 2 f . . 
-    . . . f e e e f f e e e e f . . 
-    . . . f f f f e e 2 2 2 2 e f . 
-    . . . f e 2 2 2 f f f f e 2 f . 
-    . . f f f f f f f e e e f f f . 
-    . . f f e 4 4 e b f 4 4 e e f . 
-    . . f e e 4 d 4 1 f d d e f . . 
-    . . . f e e e 4 d d d d f . . . 
-    . . . . f f e e 4 4 4 e f . . . 
-    . . . . . 4 d d e 2 2 2 f . . . 
-    . . . . . e d d e 2 2 2 f . . . 
-    . . . . . f e e f 4 5 5 f . . . 
-    . . . . . . f f f f f f . . . . 
-    . . . . . . . f f f . . . . . . 
-    `, SpriteKind.Player)
-player_direction = "R"
-max_life = 3
-controller.moveSprite(mySprite)
-tiles.setCurrentTilemap(tilemap`level2`)
-scene.cameraFollowSprite(mySprite)
-tiles.placeOnTile(mySprite, tiles.getTileLocation(1, 14))
-let mySprite2 = sprites.create(img`
-    ........................
-    ........................
-    ........................
-    ........................
-    ..........ffff..........
-    ........ff1111ff........
-    .......fb111111bf.......
-    .......fd1111111f.......
-    ......fdd1111111df......
-    ......fddd111111df......
-    ......fdddddd111df......
-    ......fbddddbfd1df......
-    ......fcbbbdcfddbf......
-    .......fcbb11111f.......
-    ........fffff1b1f.......
-    ........fb111cfbf.......
-    ........ffb1b1ff........
-    ......f.fffbfbf.........
-    ......ffffffff..........
-    .......fffff............
-    ........................
-    ........................
-    ........................
-    ........................
-    `, SpriteKind.Enemy)
-tiles.placeOnTile(mySprite2, tiles.getTileLocation(3, 5))
-let projectile2 = sprites.createProjectileFromSprite(img`
-    . . . . f f f f f . . . . . . . 
-    . . . f e e e e e f . . . . . . 
-    . . f d d d d e e e f . . . . . 
-    . c d f d d f d e e f f . . . . 
-    . c d f d d f d e e d d f . . . 
-    c d e e d d d d e e b d c . . . 
-    c d d d d c d d e e b d c . f f 
-    c c c c c d d d e e f c . f e f 
-    . f d d d d d e e f f . . f e f 
-    . . f f f f f e e e e f . f e f 
-    . . . . f e e e e e e e f f e f 
-    . . . f e f f e f e e e e f f . 
-    . . . f e f f e f e e e e f . . 
-    . . . f d b f d b f f e f . . . 
-    . . . f d d c d d b b d f . . . 
-    . . . . f f f f f f f f f . . . 
-    `, mySprite, 0, 0)
-tiles.placeOnTile(projectile2, tiles.getTileLocation(53, 19))
+let attack = false
+start_game()
 game.onUpdateInterval(601000, function () {
     timer.after(300000, function () {
         color.startFade(color.Arcade, color.SteamPunk, 500)
