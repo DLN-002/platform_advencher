@@ -1098,3 +1098,11 @@ let projectile2 = sprites.createProjectileFromSprite(img`
     . . . . f f f f f f f f f . . . 
     `, mySprite, 0, 0)
 tiles.placeOnTile(projectile2, tiles.getTileLocation(53, 19))
+game.onUpdateInterval(600000, function () {
+    timer.after(300000, function () {
+        color.startFade(color.Arcade, color.SteamPunk, 500)
+        timer.after(300000, function () {
+            color.startFade(color.SteamPunk, color.Arcade, 500)
+        })
+    })
+})
