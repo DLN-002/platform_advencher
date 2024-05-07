@@ -11,8 +11,7 @@
         "arcade-sprite-data": "github:microsoft/arcade-sprite-data#v0.2.1",
         "Timers": "github:microsoft/arcade-timers#v1.1.0",
         "palette": "*",
-        "Color Fading": "github:jwunderl/pxt-color#v0.2.3",
-        "settings-blocks": "github:microsoft/pxt-settings-blocks#v1.0.0"
+        "Color Fading": "github:jwunderl/pxt-color#v0.2.3"
     },
     "files": [
         "main.blocks",
