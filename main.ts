@@ -147,6 +147,19 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile32`, function (sprite, 
         })
     }
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile46`, function (sprite, location) {
+    if (attack == true) {
+        music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
+        coins += 2
+        tiles.setTileAt(location, assets.tile`myTile1`)
+        timer.after(500, function () {
+            game.showLongText("you got 2 coins!", DialogLayout.Top)
+        })
+        timer.after(240000, function () {
+            tiles.setTileAt(location, assets.tile`myTile46`)
+        })
+    }
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     attack = true
     if (player_direction == "D") {
