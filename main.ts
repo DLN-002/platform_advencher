@@ -120,6 +120,40 @@ controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
         game.showLongText("you don't have any Bombs!", DialogLayout.Top)
     }
 })
+function throw_bomb (x: number, y: number) {
+    projectile = sprites.createProjectileFromSprite(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . 2 . 
+        . . . . . . . . . . . . . d 2 2 
+        . . . . . . . . . . . d d . . . 
+        . . f f f f f f f d d . . . . . 
+        . f f f f f f f f f . . . . . . 
+        f f f f f f f f f f f . . . . . 
+        f f f f f f f f f f f . . . . . 
+        f f f f f f f f f f f . . . . . 
+        f f f f f f f f f f f . . . . . 
+        f f f f f f f f f f f . . . . . 
+        f f f f f f f f f f f . . . . . 
+        f f f f f f f f f f f . . . . . 
+        . f f f f f f f f f . . . . . . 
+        . . f f f f f f f . . . . . . . 
+        `, mySprite, x, y)
+    projectile.setFlag(SpriteFlag.GhostThroughWalls, true)
+}
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile63`, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`myTile1`)
+    half_hearts += 1
+    game.showLongText("you found half a heart!", DialogLayout.Top)
+    if (half_hearts == 2) {
+        game.showLongText("you got one more max life and your life is refiled!", DialogLayout.Top)
+        max_life += 1
+        half_hearts = 0
+        info.setLife(max_life)
+    } else {
+        game.showLongText("find one more half heart to get one more max life", DialogLayout.Top)
+    }
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile`, function (sprite, location) {
     if (attack == true) {
         music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
@@ -926,27 +960,6 @@ function open_gate () {
     tiles.setWallAt(tiles.getTileLocation(22, 30), false)
     tiles.setWallAt(tiles.getTileLocation(23, 30), false)
 }
-function throw_bomb (x: number, y: number) {
-    projectile = sprites.createProjectileFromSprite(img`
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . . . 
-        . . . . . . . . . . . . . . 2 . 
-        . . . . . . . . . . . . . d 2 2 
-        . . . . . . . . . . . d d . . . 
-        . . f f f f f f f d d . . . . . 
-        . f f f f f f f f f . . . . . . 
-        f f f f f f f f f f f . . . . . 
-        f f f f f f f f f f f . . . . . 
-        f f f f f f f f f f f . . . . . 
-        f f f f f f f f f f f . . . . . 
-        f f f f f f f f f f f . . . . . 
-        f f f f f f f f f f f . . . . . 
-        f f f f f f f f f f f . . . . . 
-        . f f f f f f f f f . . . . . . 
-        . . f f f f f f f . . . . . . . 
-        `, mySprite, x, y)
-    projectile.setFlag(SpriteFlag.GhostThroughWalls, true)
-}
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile10`, function (sprite, location) {
     tiles.setTileAt(tiles.getTileLocation(0, 11), assets.tile`myTile`)
     tiles.setTileAt(tiles.getTileLocation(0, 12), assets.tile`myTile7`)
@@ -1006,6 +1019,8 @@ let up: Image = null
 let down: Image = null
 let right: Image = null
 let coins = 0
+let half_hearts = 0
+half_hearts = 0
 scene.setBackgroundColor(15)
 info.setLife(3)
 info.setScore(0)
