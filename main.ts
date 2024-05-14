@@ -155,7 +155,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile63`, function (sprite, 
     half_hearts += 1
     game.showLongText("you found half a heart!", DialogLayout.Top)
     if (half_hearts == 2) {
-        game.showLongText("you got one more max life and your life is refiled!", DialogLayout.Top)
+        game.showLongText("you got one more max life and your life is refilled!", DialogLayout.Top)
         max_life += 1
         half_hearts = 0
         info.setLife(max_life)
