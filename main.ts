@@ -91,6 +91,15 @@ controller.up.onEvent(ControllerButtonEvent.Pressed, function () {
 scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile3`, function (sprite, location) {
     sprites.destroy(projectile)
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile65`, function (sprite, location) {
+    music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
+    info.changeScoreBy(1)
+    tiles.setTileAt(location, assets.tile`myTile66`)
+    game.showLongText("you got a bomb!", DialogLayout.Top)
+    timer.after(60000, function () {
+        tiles.setTileAt(location, assets.tile`myTile65`)
+    })
+})
 controller.combos.attachCombo("UUUDLLLRDURLLRUD", function () {
     music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
     max_life += 20
