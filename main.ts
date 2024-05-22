@@ -855,6 +855,7 @@ scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile0`, function (sprit
     sprites.destroy(projectile)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile91`, function (sprite, location) {
+    music.play(music.melodyPlayable(music.bigCrash), music.PlaybackMode.InBackground)
     tiles.setTileAt(location, assets.tile`myTile92`)
     open_gate()
 })
