@@ -1226,24 +1226,43 @@ let m2 = sprites.create(img`
     `, SpriteKind.monkey)
 tiles.placeOnTile(m2, tiles.getTileLocation(79, 71))
 let m3 = sprites.create(img`
+    . . . . . . . f f f f f . . . . 
+    . . . . . . f e e e e e f . . . 
+    . . . . . f e e e d d d d f . . 
+    . . . . f f e e d f d d f d c . 
+    . . . f d d e e d f d d f d c . 
+    . . . c d b e e d d d d e e d c 
+    . . . c d b e e d d c d d d d c 
+    . . . . c f e e e d d c c c c c 
+    . . . . . f f e e e d d d d f . 
+    . . . . f e e e e f f f f f . . 
+    f f . f e e e e e e f f . . . . 
+    f e . f e e f e e f e e f . . . 
+    f e . f e e e f e e f e e f . . 
+    f e f f e f b b f b d f d b f . 
+    f f f f e b d d f d d f d d f . 
+    . f f f f f f f f f f f f f . . 
+    `, SpriteKind.monkey)
+tiles.placeOnTile(m3, tiles.getTileLocation(81, 73))
+let m4 = sprites.create(img`
     . . . . f f f f f . . . . . . . 
     . . . f e e e e e f . . . . . . 
     . . f d d d d e e e f . . . . . 
     . c d f d d f d e e f f . . . . 
     . c d f d d f d e e d d f . . . 
     c d e e d d d d e e b d c . . . 
-    c d d d d c d d e e b d c . . . 
-    c c c c c d d e e e f c . . . . 
-    . f d d d d e e e f f . . . . . 
-    . . f f f f f e e e e f . . . . 
-    . . . . f f e e e e e e f . f f 
-    . . . f e e f e e f e e f . e f 
-    . . f e e f e e f e e e f . e f 
-    . f b d f d b f b b f e f f e f 
-    . f d d f d d f d d b e f f f f 
-    . . f f f f f f f f f f f f f . 
+    c d d d d c d d e e b d c . f f 
+    c c c c c d d d e e f c . f e f 
+    . f d d d d d e e f f . . f e f 
+    . . f f f f f e e e e f . f e f 
+    . . . . f e e e e e e e f f e f 
+    . . . f e f f e f e e e e f f . 
+    . . . f e f f e f e e e e f . . 
+    . . . f d b f d b f f e f . . . 
+    . . . f d d c d d b b d f . . . 
+    . . . . f f f f f f f f f . . . 
     `, SpriteKind.monkey)
-tiles.placeOnTile(m3, tiles.getTileLocation(81, 73))
+tiles.placeOnTile(m4, tiles.getTileLocation(97, 72))
 game.onUpdateInterval(601000, function () {
     timer.after(300000, function () {
         color.startFade(color.Arcade, color.SteamPunk, 500)
