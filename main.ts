@@ -184,7 +184,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile32`, function (sprite, 
         coins += 1
         tiles.setTileAt(location, assets.tile`myTile1`)
         timer.after(500, function () {
-            number = randint(1, 3)
+            number = randint(1, 2)
             if (number == 1) {
                 coins += 1
                 game.showLongText("you got a coin!", DialogLayout.Top)
@@ -852,7 +852,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile57`, function (sprite, 
         coins += 1
         tiles.setTileAt(location, assets.tile`myTile51`)
         timer.after(500, function () {
-            number = randint(1, 3)
+            number = randint(1, 2)
             if (number == 1) {
                 coins += 1
                 game.showLongText("you got a coin!", DialogLayout.Top)
@@ -983,7 +983,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile68`, function (sprite, 
         music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
         tiles.setTileAt(location, assets.tile`myTile82`)
         timer.after(500, function () {
-            number = randint(1, 3)
+            number = randint(1, 2)
             if (number == 1) {
                 coins += 1
                 game.showLongText("you got a coin!", DialogLayout.Top)
@@ -1009,7 +1009,7 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile31`, function (sprite, 
         coins += 1
         tiles.setTileAt(location, assets.tile`myTile30`)
         timer.after(500, function () {
-            number = randint(1, 3)
+            number = randint(1, 2)
             if (number == 1) {
                 coins += 1
                 game.showLongText("you got a coin!", DialogLayout.Top)
