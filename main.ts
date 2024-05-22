@@ -111,6 +111,14 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile58`, function (sprite, 
         info.changeLifeBy(-1)
     })
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile86`, function (sprite, location) {
+    music.play(music.melodyPlayable(music.bigCrash), music.PlaybackMode.InBackground)
+    tiles.setTileAt(location, assets.tile`myTile87`)
+    tiles.setTileAt(tiles.getTileLocation(2, 39), assets.tile`myTile28`)
+    tiles.setTileAt(tiles.getTileLocation(3, 39), assets.tile`myTile28`)
+    tiles.setWallAt(tiles.getTileLocation(2, 39), false)
+    tiles.setWallAt(tiles.getTileLocation(3, 39), false)
+})
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     if (0 < info.score()) {
         info.changeScoreBy(-1)
@@ -846,6 +854,10 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile44`, function (sprite, 
 scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile0`, function (sprite, location) {
     sprites.destroy(projectile)
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile91`, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`myTile92`)
+    open_gate()
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile57`, function (sprite, location) {
     if (attack == true) {
         music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
@@ -978,6 +990,14 @@ function open_gate () {
     tiles.setWallAt(tiles.getTileLocation(22, 30), false)
     tiles.setWallAt(tiles.getTileLocation(23, 30), false)
 }
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile89`, function (sprite, location) {
+    music.play(music.melodyPlayable(music.bigCrash), music.PlaybackMode.InBackground)
+    tiles.setTileAt(location, assets.tile`myTile90`)
+    tiles.setTileAt(tiles.getTileLocation(29, 37), assets.tile`myTile28`)
+    tiles.setTileAt(tiles.getTileLocation(29, 38), assets.tile`myTile28`)
+    tiles.setWallAt(tiles.getTileLocation(29, 37), false)
+    tiles.setWallAt(tiles.getTileLocation(29, 38), false)
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile68`, function (sprite, location) {
     if (attack == true) {
         music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
@@ -1033,9 +1053,6 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile23`, function (sprite, 
         game.showLongText("no life to refill.", DialogLayout.Top)
     }
     tiles.setTileAt(location, assets.tile`myTile1`)
-})
-scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile28`, function (sprite, location) {
-    open_gate()
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     if (attack == false) {
