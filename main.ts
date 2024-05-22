@@ -1,5 +1,6 @@
 namespace SpriteKind {
     export const Animal = SpriteKind.create()
+    export const monkey = SpriteKind.create()
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile19`, function (sprite, location) {
     if (attack == true) {
@@ -183,7 +184,11 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile32`, function (sprite, 
         coins += 1
         tiles.setTileAt(location, assets.tile`myTile1`)
         timer.after(500, function () {
-            game.showLongText("you got a coin!", DialogLayout.Top)
+            number = randint(1, 3)
+            if (number == 1) {
+                coins += 1
+                game.showLongText("you got a coin!", DialogLayout.Top)
+            }
         })
         timer.after(60000, function () {
             tiles.setTileAt(location, assets.tile`myTile32`)
@@ -847,7 +852,11 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile57`, function (sprite, 
         coins += 1
         tiles.setTileAt(location, assets.tile`myTile51`)
         timer.after(500, function () {
-            game.showLongText("you got a coin!", DialogLayout.Top)
+            number = randint(1, 3)
+            if (number == 1) {
+                coins += 1
+                game.showLongText("you got a coin!", DialogLayout.Top)
+            }
         })
         timer.after(60000, function () {
             tiles.setTileAt(location, assets.tile`myTile57`)
@@ -969,6 +978,22 @@ function open_gate () {
     tiles.setWallAt(tiles.getTileLocation(22, 30), false)
     tiles.setWallAt(tiles.getTileLocation(23, 30), false)
 }
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile68`, function (sprite, location) {
+    if (attack == true) {
+        music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
+        tiles.setTileAt(location, assets.tile`myTile82`)
+        timer.after(500, function () {
+            number = randint(1, 3)
+            if (number == 1) {
+                coins += 1
+                game.showLongText("you got a coin!", DialogLayout.Top)
+            }
+        })
+        timer.after(60000, function () {
+            tiles.setTileAt(location, assets.tile`myTile68`)
+        })
+    }
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile10`, function (sprite, location) {
     tiles.setTileAt(tiles.getTileLocation(0, 11), assets.tile`myTile`)
     tiles.setTileAt(tiles.getTileLocation(0, 12), assets.tile`myTile7`)
@@ -984,7 +1009,11 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile31`, function (sprite, 
         coins += 1
         tiles.setTileAt(location, assets.tile`myTile30`)
         timer.after(500, function () {
-            game.showLongText("you got a coin!", DialogLayout.Top)
+            number = randint(1, 3)
+            if (number == 1) {
+                coins += 1
+                game.showLongText("you got a coin!", DialogLayout.Top)
+            }
         })
         timer.after(60000, function () {
             tiles.setTileAt(location, assets.tile`myTile31`)
@@ -1018,6 +1047,7 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
         sprites.destroy(otherSprite)
     }
 })
+let number = 0
 let projectile: Sprite = null
 let attack = false
 let max_life = 0
@@ -1157,7 +1187,7 @@ let mySprite2 = sprites.create(img`
     ........................
     `, SpriteKind.Enemy)
 tiles.placeOnTile(mySprite2, tiles.getTileLocation(3, 5))
-mySprite2 = sprites.create(img`
+let m1 = sprites.create(img`
     . . . . f f f f f . . . . . . . 
     . . . f e e e e e f . . . . . . 
     . . f d d d d e e e f . . . . . 
@@ -1174,8 +1204,46 @@ mySprite2 = sprites.create(img`
     . f b d f d b f b b f e f f e f 
     . f d d f d d f d d b e f f f f 
     . . f f f f f f f f f f f f f . 
-    `, SpriteKind.Animal)
-tiles.placeOnTile(mySprite2, tiles.getTileLocation(53, 19))
+    `, SpriteKind.monkey)
+tiles.placeOnTile(m1, tiles.getTileLocation(53, 19))
+let m2 = sprites.create(img`
+    . . . . f f f f f . . . . . . . 
+    . . . f e e e e e f . . . . . . 
+    . . f d d d d e e e f . . . . . 
+    . c d f d d f d e e f f . . . . 
+    . c d f d d f d e e d d f . . . 
+    c d e e d d d d e e b d c . . . 
+    c d d d d c d d e e b d c . . . 
+    c c c c c d d e e e f c . . . . 
+    . f d d d d e e e f f . . . . . 
+    . . f f f f f e e e e f . . . . 
+    . . . . f f e e e e e e f . f f 
+    . . . f e e f e e f e e f . e f 
+    . . f e e f e e f e e e f . e f 
+    . f b d f d b f b b f e f f e f 
+    . f d d f d d f d d b e f f f f 
+    . . f f f f f f f f f f f f f . 
+    `, SpriteKind.monkey)
+tiles.placeOnTile(m2, tiles.getTileLocation(79, 71))
+let m3 = sprites.create(img`
+    . . . . f f f f f . . . . . . . 
+    . . . f e e e e e f . . . . . . 
+    . . f d d d d e e e f . . . . . 
+    . c d f d d f d e e f f . . . . 
+    . c d f d d f d e e d d f . . . 
+    c d e e d d d d e e b d c . . . 
+    c d d d d c d d e e b d c . . . 
+    c c c c c d d e e e f c . . . . 
+    . f d d d d e e e f f . . . . . 
+    . . f f f f f e e e e f . . . . 
+    . . . . f f e e e e e e f . f f 
+    . . . f e e f e e f e e f . e f 
+    . . f e e f e e f e e e f . e f 
+    . f b d f d b f b b f e f f e f 
+    . f d d f d d f d d b e f f f f 
+    . . f f f f f f f f f f f f f . 
+    `, SpriteKind.monkey)
+tiles.placeOnTile(m3, tiles.getTileLocation(81, 73))
 game.onUpdateInterval(601000, function () {
     timer.after(300000, function () {
         color.startFade(color.Arcade, color.SteamPunk, 500)
