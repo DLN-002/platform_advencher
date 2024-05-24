@@ -101,6 +101,22 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile65`, function (sprite, 
         tiles.setTileAt(location, assets.tile`myTile65`)
     })
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile94`, function (sprite, location) {
+    music.play(music.melodyPlayable(music.bigCrash), music.PlaybackMode.InBackground)
+    tiles.setTileAt(location, assets.tile`myTile95`)
+    tiles.setTileAt(tiles.getTileLocation(36, 37), assets.tile`myTile28`)
+    tiles.setTileAt(tiles.getTileLocation(37, 37), assets.tile`myTile28`)
+    tiles.setTileAt(tiles.getTileLocation(38, 37), assets.tile`myTile28`)
+    tiles.setWallAt(tiles.getTileLocation(36, 37), false)
+    tiles.setWallAt(tiles.getTileLocation(37, 37), false)
+    tiles.setWallAt(tiles.getTileLocation(38, 37), false)
+    tiles.setTileAt(tiles.getTileLocation(76, 48), assets.tile`myTile28`)
+    tiles.setTileAt(tiles.getTileLocation(76, 47), assets.tile`myTile28`)
+    tiles.setTileAt(tiles.getTileLocation(76, 46), assets.tile`myTile28`)
+    tiles.setWallAt(tiles.getTileLocation(76, 48), false)
+    tiles.setWallAt(tiles.getTileLocation(76, 47), false)
+    tiles.setWallAt(tiles.getTileLocation(76, 46), false)
+})
 controller.combos.attachCombo("UUUDLLLRDURLLRUD", function () {
     music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
     max_life += 20
