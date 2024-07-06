@@ -8,6 +8,7 @@ namespace SpriteKind {
     export const enemy2 = SpriteKind.create()
     export const enemy5 = SpriteKind.create()
     export const enemy6 = SpriteKind.create()
+    export const Ghost = SpriteKind.create()
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile19`, function (sprite, location) {
     if (attack == true) {
@@ -102,6 +103,14 @@ scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile3`, function (sprit
 scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile105`, function (sprite, location) {
     sprites.destroy(projectile)
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile106`, function (sprite, location) {
+    music.play(music.melodyPlayable(music.bigCrash), music.PlaybackMode.InBackground)
+    tiles.setTileAt(location, assets.tile`myTile111`)
+    tiles.setTileAt(tiles.getTileLocation(80, 75), assets.tile`myTile1`)
+    tiles.setTileAt(tiles.getTileLocation(81, 75), assets.tile`myTile1`)
+    tiles.setWallAt(tiles.getTileLocation(80, 75), false)
+    tiles.setWallAt(tiles.getTileLocation(81, 75), false)
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile65`, function (sprite, location) {
     music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
     info.changeScoreBy(1)
@@ -131,6 +140,16 @@ controller.combos.attachCombo("UUUDLLLRDURLLRUD", function () {
     music.play(music.melodyPlayable(music.powerUp), music.PlaybackMode.InBackground)
     max_life += 20
     info.changeLifeBy(20)
+})
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Ghost, function (sprite, otherSprite) {
+    if (attack == false) {
+        timer.throttle("action", 1000, function () {
+            info.changeLifeBy(-1)
+        })
+    }
+    if (attack == true) {
+        sprites.destroy(otherSprite)
+    }
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile58`, function (sprite, location) {
     timer.throttle("action", 1000, function () {
@@ -690,6 +709,10 @@ scene.onOverlapTile(SpriteKind.Projectile, assets.tile`myTile24`, function (spri
         sprites.destroy(projectile)
     })
 })
+sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Ghost, function (sprite, otherSprite) {
+    sprites.destroy(sprite)
+    sprites.destroy(otherSprite)
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile33`, function (sprite, location) {
     if (attack == true) {
         music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
@@ -698,16 +721,6 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile33`, function (sprite, 
         timer.after(500, function () {
             game.showLongText("you got a coin!", DialogLayout.Top)
         })
-    }
-})
-sprites.onOverlap(SpriteKind.Player, SpriteKind.enemy2, function (sprite, otherSprite) {
-    if (attack == false) {
-        timer.throttle("action", 1000, function () {
-            info.changeLifeBy(-1)
-        })
-    }
-    if (attack == true) {
-        sprites.destroy(otherSprite)
     }
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -808,16 +821,6 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile97`, function (sprite, 
     tiles.setWallAt(tiles.getTileLocation(21, 43), false)
     tiles.setWallAt(tiles.getTileLocation(22, 43), false)
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.enemy6, function (sprite, otherSprite) {
-    if (attack == false) {
-        timer.throttle("action", 1000, function () {
-            info.changeLifeBy(-1)
-        })
-    }
-    if (attack == true) {
-        sprites.destroy(otherSprite)
-    }
-})
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     animation.runImageAnimation(
     Hero,
@@ -900,16 +903,6 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile36`, function (sprite, 
     coins += 1
     tiles.setTileAt(location, assets.tile`myTile37`)
     game.showLongText("you got a coin!", DialogLayout.Top)
-})
-sprites.onOverlap(SpriteKind.Player, SpriteKind.enemy4, function (sprite, otherSprite) {
-    if (attack == false) {
-        timer.throttle("action", 1000, function () {
-            info.changeLifeBy(-1)
-        })
-    }
-    if (attack == true) {
-        sprites.destroy(otherSprite)
-    }
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile59`, function (sprite, location) {
     music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
@@ -1050,16 +1043,6 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile61`, function (sprite, 
         })
     }
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.enemy5, function (sprite, otherSprite) {
-    if (attack == false) {
-        timer.throttle("action", 1000, function () {
-            info.changeLifeBy(-1)
-        })
-    }
-    if (attack == true) {
-        sprites.destroy(otherSprite)
-    }
-})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`activate enemy 1`, function (sprite, location) {
     Enemy1.follow(Hero, 50)
 })
@@ -1129,29 +1112,11 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile31`, function (sprite, 
         })
     }
 })
-sprites.onOverlap(SpriteKind.Player, SpriteKind.enemy3, function (sprite, otherSprite) {
-    if (attack == false) {
-        timer.throttle("action", 1000, function () {
-            info.changeLifeBy(-1)
-        })
-    }
-    if (attack == true) {
-        sprites.destroy(otherSprite)
-    }
-})
-sprites.onOverlap(SpriteKind.Player, SpriteKind.enemy1, function (sprite, otherSprite) {
-    if (attack == false) {
-        timer.throttle("action", 1000, function () {
-            info.changeLifeBy(-1)
-        })
-    }
-    if (attack == true) {
-        sprites.destroy(otherSprite)
-    }
-})
-sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
-    sprites.destroy(sprite)
-    sprites.destroy(otherSprite)
+sprites.onOverlap(SpriteKind.Player, SpriteKind.monkey, function (sprite, otherSprite) {
+    otherSprite.follow(sprite, 100)
+    timer.after(1000, function () {
+        otherSprite.follow(sprite, 0)
+    })
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`activate enemy 6 one`, function (sprite, location) {
     Enemy6.follow(Hero, 50)
@@ -1188,6 +1153,8 @@ let right: Image = null
 let coins = 0
 let half_hearts = 0
 half_hearts = 0
+let Stars = 0
+let World = 1
 scene.setBackgroundColor(15)
 info.setLife(3)
 info.setScore(0)
@@ -1389,7 +1356,7 @@ Enemy1 = sprites.create(img`
     ........................
     ........................
     ........................
-    `, SpriteKind.enemy1)
+    `, SpriteKind.Ghost)
 tiles.placeOnTile(Enemy1, tiles.getTileLocation(3, 5))
 Enemy2 = sprites.create(img`
     ........................
@@ -1416,7 +1383,7 @@ Enemy2 = sprites.create(img`
     ........................
     ........................
     ........................
-    `, SpriteKind.enemy2)
+    `, SpriteKind.Ghost)
 tiles.placeOnTile(Enemy2, tiles.getTileLocation(21, 28))
 Enemy3 = sprites.create(img`
     ........................
@@ -1443,7 +1410,7 @@ Enemy3 = sprites.create(img`
     ........................
     ........................
     ........................
-    `, SpriteKind.enemy3)
+    `, SpriteKind.Ghost)
 tiles.placeOnTile(Enemy3, tiles.getTileLocation(14, 2))
 Enemy4 = sprites.create(img`
     ........................
@@ -1470,7 +1437,7 @@ Enemy4 = sprites.create(img`
     ........................
     ........................
     ........................
-    `, SpriteKind.enemy4)
+    `, SpriteKind.Ghost)
 tiles.placeOnTile(Enemy4, tiles.getTileLocation(122, 24))
 Enemy5 = sprites.create(img`
     ........................
@@ -1497,7 +1464,7 @@ Enemy5 = sprites.create(img`
     ........................
     ........................
     ........................
-    `, SpriteKind.enemy5)
+    `, SpriteKind.Ghost)
 tiles.placeOnTile(Enemy5, tiles.getTileLocation(52, 35))
 Enemy6 = sprites.create(img`
     ........................
@@ -1524,7 +1491,7 @@ Enemy6 = sprites.create(img`
     ........................
     ........................
     ........................
-    `, SpriteKind.enemy6)
+    `, SpriteKind.Ghost)
 tiles.placeOnTile(Enemy6, tiles.getTileLocation(77, 23))
 game.onUpdateInterval(601000, function () {
     timer.after(300000, function () {
