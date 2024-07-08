@@ -806,6 +806,12 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`activate enemy 2`, function (
 scene.onOverlapTile(SpriteKind.Player, assets.tile`activate enemy 3`, function (sprite, location) {
     Enemy3.follow(Hero, 50)
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile112`, function (sprite, location) {
+    game.showLongText("You found the star in this world! ", DialogLayout.Top)
+    game.showLongText("You can use the transport tile to leave the level! ", DialogLayout.Top)
+    tiles.setTileAt(location, assets.tile`myTile28`)
+    Stars += 1
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile18`, function (sprite, location) {
     tiles.setTileAt(location, assets.tile`myTile1`)
     info.changeScoreBy(3)
@@ -1022,6 +1028,8 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     player_direction = "D"
 })
 controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
+    game.showLongText("World- " + World, DialogLayout.Top)
+    game.showLongText("Stars- " + Stars, DialogLayout.Top)
     game.showLongText("Max Life- " + max_life, DialogLayout.Top)
     game.showLongText("Coins- " + coins, DialogLayout.Top)
     game.showLongText("Bombs- " + info.score(), DialogLayout.Top)
@@ -1069,6 +1077,11 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile89`, function (sprite, 
     tiles.setTileAt(tiles.getTileLocation(29, 38), assets.tile`myTile28`)
     tiles.setWallAt(tiles.getTileLocation(29, 37), false)
     tiles.setWallAt(tiles.getTileLocation(29, 38), false)
+})
+scene.onOverlapTile(SpriteKind.monkey, assets.tile`myTile4`, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`myTile1`)
+    coins += 1
+    game.showLongText("You got a coin!", DialogLayout.Top)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile68`, function (sprite, location) {
     if (attack == true) {
@@ -1118,6 +1131,16 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.monkey, function (sprite, otherS
         otherSprite.follow(sprite, 0)
     })
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile110`, function (sprite, location) {
+    if (Stars == 1) {
+        game.splash("World-2")
+        World += 1
+        tiles.setCurrentTilemap(tilemap`level3`)
+        tiles.placeOnTile(Hero, tiles.getTileLocation(0, 0))
+        sprites.destroyAllSpritesOfKind(SpriteKind.Ghost)
+        sprites.destroyAllSpritesOfKind(SpriteKind.monkey)
+    }
+})
 scene.onOverlapTile(SpriteKind.Player, assets.tile`activate enemy 6 one`, function (sprite, location) {
     Enemy6.follow(Hero, 50)
 })
@@ -1151,10 +1174,12 @@ let up: Image = null
 let down: Image = null
 let right: Image = null
 let coins = 0
+let World = 0
+let Stars = 0
 let half_hearts = 0
 half_hearts = 0
-let Stars = 0
-let World = 1
+Stars = 0
+World = 1
 scene.setBackgroundColor(15)
 info.setLife(3)
 info.setScore(0)
