@@ -9,6 +9,7 @@ namespace SpriteKind {
     export const enemy5 = SpriteKind.create()
     export const enemy6 = SpriteKind.create()
     export const Ghost = SpriteKind.create()
+    export const npc = SpriteKind.create()
 }
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile19`, function (sprite, location) {
     if (attack == true) {
@@ -255,7 +256,6 @@ controller.combos.attachCombo("UUDLLRUDRL", function () {
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile32`, function (sprite, location) {
     if (attack == true) {
         music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
-        coins += 1
         tiles.setTileAt(location, assets.tile`myTile1`)
         timer.after(500, function () {
             number = randint(1, 2)
@@ -954,7 +954,6 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile91`, function (sprite, 
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile57`, function (sprite, location) {
     if (attack == true) {
         music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
-        coins += 1
         tiles.setTileAt(location, assets.tile`myTile51`)
         timer.after(500, function () {
             number = randint(1, 2)
@@ -1045,8 +1044,20 @@ controller.down.onEvent(ControllerButtonEvent.Pressed, function () {
     )
     player_direction = "D"
 })
+scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile122`, function (sprite, location) {
+    tiles.setTileAt(location, assets.tile`myTile121`)
+    tiles.replaceAllTiles(assets.tile`myTile119`, assets.tile`myTile115`)
+    tiles.setTileAt(tiles.getTileLocation(84, 130), assets.tile`myTile116`)
+    tiles.setTileAt(tiles.getTileLocation(84, 131), assets.tile`myTile116`)
+    tiles.setTileAt(tiles.getTileLocation(84, 132), assets.tile`myTile116`)
+    tiles.setTileAt(tiles.getTileLocation(84, 133), assets.tile`myTile116`)
+    tiles.setWallAt(tiles.getTileLocation(84, 130), false)
+    tiles.setWallAt(tiles.getTileLocation(84, 131), false)
+    tiles.setWallAt(tiles.getTileLocation(84, 132), false)
+    tiles.setWallAt(tiles.getTileLocation(84, 133), false)
+})
 controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
-    game.showLongText("World- " + World, DialogLayout.Top)
+    game.showLongText("World-" + World, DialogLayout.Top)
     game.showLongText("Stars- " + Stars, DialogLayout.Top)
     game.showLongText("Max Life- " + max_life, DialogLayout.Top)
     game.showLongText("Coins- " + coins, DialogLayout.Top)
@@ -1054,8 +1065,10 @@ controller.menu.onEvent(ControllerButtonEvent.Pressed, function () {
     game.showLongText("A- Sword Attack         B- Throw Bomb", DialogLayout.Top)
 })
 info.onLifeZero(function () {
-    music.play(music.melodyPlayable(music.wawawawaa), music.PlaybackMode.InBackground)
-    color.FadeToBlack.startScreenEffect(500)
+    info.setScore(coins)
+    game.setGameOverEffect(false, color.Darken)
+    game.setGameOverMessage(false, "GAME OVER!")
+    game.gameOver(false)
 })
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile61`, function (sprite, location) {
     if (attack == true) {
@@ -1132,7 +1145,6 @@ scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile10`, function (sprite, 
 scene.onOverlapTile(SpriteKind.Player, assets.tile`myTile31`, function (sprite, location) {
     if (attack == true) {
         music.play(music.melodyPlayable(music.thump), music.PlaybackMode.InBackground)
-        coins += 1
         tiles.setTileAt(location, assets.tile`myTile30`)
         timer.after(500, function () {
             number = randint(1, 2)
@@ -1567,6 +1579,25 @@ Enemy7 = sprites.create(img`
     ........................
     `, SpriteKind.Ghost)
 tiles.placeOnTile(Enemy7, tiles.getTileLocation(80, 58))
+let npc1 = sprites.create(img`
+    . . . . f f f f . . . . 
+    . . . f e e e e f . . . 
+    . . f e e e e e e f . . 
+    . . f e e e e e e f . . 
+    . f e e e e e e e e f . 
+    f f f f f f f f f f f f 
+    f f e 4 4 4 4 4 f f f f 
+    f f e 4 4 f f 4 e 4 f f 
+    . f f d d d d 4 d 4 f . 
+    . . f b b d d 4 f f f . 
+    . . f e 4 4 4 e e f . . 
+    . . f 1 1 1 e d d 4 . . 
+    . . f 1 1 1 e d d e . . 
+    . . f 6 6 6 f e e f . . 
+    . . . f f f f f f . . . 
+    . . . . . f f f . . . . 
+    `, SpriteKind.npc)
+tiles.placeOnTile(npc1, tiles.getTileLocation(85, 78))
 game.onUpdateInterval(601000, function () {
     timer.after(300000, function () {
         color.startFade(color.Arcade, color.SteamPunk, 500)
